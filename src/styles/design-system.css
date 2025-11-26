@@ -1,0 +1,573 @@
+/* ============================================
+   EWS DevOps Support - Design System
+   TELUS-Themed Professional Design
+   ============================================ */
+
+/* ============================================
+   1. CSS VARIABLES (Design Tokens)
+   ============================================ */
+:root {
+  /* TELUS Brand Colors */
+  --color-telus-blue: #0c2340;
+  --color-telus-green: #66cc00;
+  --color-telus-light-blue: #1a3a5f;
+  
+  /* Primary Colors - TELUS Blue Scale */
+  --color-primary-50: #e6eaf0;
+  --color-primary-100: #c0cad9;
+  --color-primary-200: #96a7c0;
+  --color-primary-300: #6c84a7;
+  --color-primary-400: #4d6994;
+  --color-primary-500: #2e4f81;
+  --color-primary-600: #294879;
+  --color-primary-700: #233f6e;
+  --color-primary-800: #1d3664;
+  --color-primary-900: #0c2340;
+
+  /* Success Colors - TELUS Green Scale */
+  --color-success-50: #f0fce6;
+  --color-success-100: #d9f7c0;
+  --color-success-200: #c0f296;
+  --color-success-300: #a6ed6c;
+  --color-success-400: #93e94d;
+  --color-success-500: #80e52e;
+  --color-success-600: #66cc00;
+  --color-success-700: #5ab300;
+  --color-success-800: #4d9900;
+  --color-success-900: #408000;
+
+  /* Neutral Colors */
+  --color-neutral-50: #f9f9f9;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #eeeeee;
+  --color-neutral-300: #dddddd;
+  --color-neutral-400: #999999;
+  --color-neutral-500: #666666;
+  --color-neutral-600: #555555;
+  --color-neutral-700: #333333;
+  --color-neutral-800: #1f1f1f;
+  --color-neutral-900: #111111;
+
+  /* Semantic Colors */
+  --color-success: #66cc00;
+  --color-warning: #f59e0b;
+  --color-error: #c62828;
+  --color-info: #3b82f6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+/* ============================================
+   2. LAYOUT COMPONENTS
+   ============================================ */
+
+/* Page Container */
+.page-container {
+  min-height: 100vh;
+  background-color: var(--color-neutral-50);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: var(--spacing-md);
+}
+
+/* Card Component */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.card-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-telus-blue);
+  margin: 0;
+  text-align: center;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: var(--color-neutral-600);
+  margin-top: var(--spacing-sm);
+  text-align: center;
+}
+
+.card-body {
+  padding: var(--spacing-md) 0;
+}
+
+.card-footer {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-neutral-200);
+}
+
+/* Section Header - Dark Navy Style */
+.section-header {
+  font-size: 1.2rem;
+  color: white;
+  background-color: #1a2b3c;
+  margin: -24px -24px 20px -24px;
+  padding: 16px 24px;
+  border-radius: 8px 8px 0 0;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a2b3c;
+  margin: -24px -24px 20px -24px;
+  padding: 16px 24px;
+  border-radius: 8px 8px 0 0;
+}
+
+.section-header-row h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Data Grid - Key-Value Pair Display */
+.data-grid {
+  display: grid;
+  gap: 1px;
+  background-color: #e5e7eb;
+}
+
+.data-grid-row {
+  display: flex;
+  padding: 12px 16px;
+  background-color: white;
+}
+
+.data-grid-label {
+  font-weight: 600;
+  min-width: 180px;
+  color: var(--color-neutral-600);
+}
+
+.data-grid-value {
+  flex: 1;
+  color: var(--color-neutral-800);
+}
+
+/* ============================================
+   3. FORM COMPONENTS
+   ============================================ */
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  margin-bottom: 5px;
+}
+
+.form-label-required::after {
+  content: ' *';
+  color: var(--color-error);
+  font-weight: bold;
+}
+
+/* Input Fields */
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-neutral-900);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  height: 42px;
+}
+
+.form-textarea {
+  height: auto;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-telus-blue);
+  box-shadow: 0 0 5px rgba(12, 35, 64, 0.2);
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled,
+.form-input[readonly],
+.form-select[readonly],
+.form-textarea[readonly] {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+  border-color: #ccc;
+  opacity: 0.7;
+}
+
+/* Input States */
+.form-input.is-invalid,
+.form-select.is-invalid,
+.form-textarea.is-invalid {
+  border-color: var(--color-error);
+  box-shadow: 0 0 3px rgba(198, 40, 40, 0.2);
+}
+
+.form-input.is-valid,
+.form-select.is-valid,
+.form-textarea.is-valid {
+  border-color: var(--color-success);
+}
+
+.form-error {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: 0.75rem;
+  color: var(--color-error);
+}
+
+.form-help {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: 0.75rem;
+  color: var(--color-neutral-500);
+}
+
+/* ============================================
+   4. BUTTON COMPONENTS
+   ============================================ */
+
+/* Base Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Button Variants */
+.btn-primary {
+  color: white;
+  background-color: var(--color-telus-blue);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-telus-light-blue);
+}
+
+.btn-secondary {
+  color: var(--color-neutral-700);
+  background-color: white;
+  border: 1px solid var(--color-neutral-300);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-neutral-100);
+}
+
+.btn-success {
+  color: white;
+  background-color: var(--color-telus-green);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #5ab300;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-danger {
+  color: white;
+  background-color: var(--color-error);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #a52222;
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  height: 36px;
+}
+
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 16px;
+  min-width: 220px;
+}
+
+/* Button Group */
+.btn-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   5. NAVIGATION COMPONENTS
+   ============================================ */
+
+.navbar {
+  background-color: var(--color-telus-blue);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: 15px 0;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav li {
+  margin: 0 10px;
+}
+
+.nav-link {
+  display: block;
+  padding: 15px 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  border-bottom: 3px solid var(--color-telus-green);
+  font-weight: 700;
+}
+
+/* ============================================
+   6. ALERT COMPONENTS
+   ============================================ */
+
+.alert {
+  padding: 12px 15px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  white-space: pre-line;
+}
+
+.alert-title {
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* ============================================
+   7. TABLE COMPONENTS
+   ============================================ */
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background-color: #f0f2f5;
+}
+
+.table th {
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-neutral-700);
+  border-bottom: 2px solid #ddd;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   8. BADGE COMPONENTS
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.badge-primary {
+  color: white;
+  background-color: var(--color-telus-blue);
+}
+
+.badge-success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.badge-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+
+.badge-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.badge-neutral {
+  color: var(--color-neutral-700);
+  background-color: var(--color-neutral-100);
+}
+
+/* ============================================
+   9. GRID SYSTEM
+   ============================================ */
+
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }

@@ -1,0 +1,76 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "T00:00:00Z",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "304",
+					"description": "AppleCare iPad Tier 5",
+					"vendorCd": "APL",
+					"warrantyProductCd": "AC_PLUS_IPAD_TIER5",
+					"brandId": "1",
+					"warrantySku": "ACPLUSFRNTIPADT5"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "1",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": "T19:00:35Z"
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "T00:00:00Z",
+				"sku": "",
+				"equipmentGroupCd": "PCS"
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "367",
+				"paymentMethodCd": "MRC",
+				"soc": "SAPCAIP12",
+				"priceAmt": "12.0",
+				"sapMaterialNum": "000000000008011939"
+			}
+		},
+		"cancelContractList": []
+	}
+}

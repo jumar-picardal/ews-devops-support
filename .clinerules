@@ -1,0 +1,416 @@
+# EWS DevOps Support Tool - Development Rules
+
+## Technology Stack
+
+### Frontend
+- **React 19 RC**: Modern React with Compiler, Actions, and new hooks
+- **React Router v6**: Client-side routing
+- **Axios**: HTTP client for API requests
+- **Tailwind CSS**: Utility-first CSS framework
+- **TypeScript**: Type safety and better developer experience
+
+### Backend (Proxy Server)
+- **Node.js 18+**: Runtime environment
+- **Express.js**: Web framework for REST API
+- **PostgreSQL Client (pg)**: GCP PostgreSQL database (EWS)
+- **Oracle DB Client (oracledb)**: KB and SEMS Oracle databases
+- **Axios**: HTTP client for external APIs
+- **dotenv**: Environment variable management
+- **HTTPS Agent**: Certificate handling for secure connections
+
+### Development Tools
+- **ESLint**: Code linting
+- **Vite**: Build tooling and development server
+- **React Compiler**: Automatic optimization (enabled in vite.config.ts)
+- **TypeScript Compiler**: Type checking and compilation
+
+---
+
+## Architecture Patterns
+
+### 1. Backend Service Layer Structure
+
+```
+server/
+├── config/
+│   ├── ewsDatabase.ts          # PostgreSQL connection pool
+│   └── kbDatabase.ts            # Oracle connection pool
+├── routes/                      # Express route handlers
+│   ├── ewMaintenanceRetry.routes.ts
+│   ├── asurionEnrollmentCancel.routes.ts
+│   ├── asurionEnrollmentCreateForDCC.routes.ts
+│   ├── wlsCustOffrngInstMgmt.routes.ts
+│   ├── updateReportedStatToFail.routes.ts
+│   └── [other route files]
+├── services/
+│   ├── ewMaintenanceRetry.service.ts         # EW Maintenance API
+│   ├── asurionEnrollmentCancel.service.ts    # Asurion Cancel API
+│   ├── asurionEnrollmentCreateForDCC.service.ts  # Asurion Enrollment API
+│   ├── wlsCustOffrngInstMgmt.service.ts      # WLS SOC Management
+│   ├── wlsCustOffrngInstMgmtRemoveSoc.service.ts
+│   ├── wlsProdInvMgmtMemo.service.ts
+│   ├── wlsProdInvMgmtPhoneNumInfo.service.ts
+│   ├── wlsProdInvMgmtPhoneNumListInfo.service.ts
+│   ├── oauth/
+│   │   └── OAuth2TokenManager.ts     # Centralized OAuth2 token management
+│   └── database/
+│       ├── ews/                      # PostgreSQL queries
+│       │   ├── getWarrantyStatus.service.ts
+│       │   ├── getEwContractInfo.service.ts
+│       │   ├── getEwCustomerInfo.service.ts
+│       │   ├── getEwTransactionInfo.service.ts
+│       │   ├── getDccEnrollmentRequest.service.ts
+│       │   ├── getDccsEnrollmentRequest.service.ts
+│       │   ├── getActiveProcessingInfo.service.ts
+│       │   ├── getClosedTenderInfo.service.ts
+│       │   ├── getClosedUnregisterInfo.service.ts
+│       │   ├── updateReportedStatToFail.service.ts
+│       │   └── updateReportedStatToSuccess.service.ts
+│       └── kb/                       # Oracle queries
+│           ├── getKbBanStatus.service.ts
+│           ├── getKbMemoList.service.ts
+│           ├── getKbMemoImeiInfo.service.ts
+│           └── getKbMemoSocInfo.service.ts
+```
+
+### 2. Frontend Service Layer Structure
+
+```
+src/
+├── components/
+│   ├── RetryContracts.tsx        # Retry warranty contracts UI
+│   ├── ReconcileTender.tsx       # Tender reconciliation UI
+│   └── MessageLog.tsx            # Logging display component
+├── services/
+│   └── api/                      # Frontend API clients
+│       ├── ewMaintenanceRetry.api.ts
+│       ├── asurionEnrollmentCancel.api.ts
+│       ├── asurionEnrollmentCreateForDCC.api.ts
+│       ├── getWarrantyStatus.api.ts
+│       ├── getEwContractInfo.api.ts
+│       ├── getEwCustomerInfo.api.ts
+│       ├── getEwTransactionInfo.api.ts
+│       ├── getKbBanStatus.api.ts
+│       ├── getKbMemoList.api.ts
+│       ├── wlsCustOffrngInstMgmt.api.ts
+│       ├── wlsProdInvMgmtMemo.api.ts
+│       ├── updateReportedStatToFail.api.ts
+│       └── updateReportedStatToSuccess.api.ts
+├── hooks/
+│   ├── retryContracts/           # Custom hooks for retry logic
+│   │   ├── useCase1Retry.ts      # Update to FAIL → RETRY
+│   │   ├── useCase2Retry.ts      # Update to SUCCESS → RETRY
+│   │   ├── useCase3Retry.ts      # Cancel Asurion → Update to FAIL → RETRY
+│   │   ├── useCase4Retry.ts      # Cancel Asurion → RETRY
+│   │   ├── useCase5Retry.ts      # Remove SOC → Update to FAIL → RETRY
+│   │   ├── useCase6Retry.ts      # Create DCC Enrollment → Update to SUCCESS → RETRY
+│   │   └── useCase7Retry.ts      # Create DCC Enrollment → RETRY
+│   └── reconcileTender/
+│       └── useFetchDetails.ts    # Tender details fetching
+├── utils/
+│   ├── banStatusMapper.ts        # BAN status mapping utilities
+│   └── memoTypeMapper.ts         # Memo type mapping utilities
+├── constants/
+│   └── retryCases.ts             # Retry case definitions
+└── types/                        # TypeScript type definitions
+```
+
+### 3. Service Pattern
+
+**Backend Services follow factory pattern:**
+```typescript
+class ServiceName {
+  private config: ServiceConfig;
+  private tokenManager: OAuth2TokenManager;
+
+  constructor(config: ServiceConfig) {
+    this.config = config;
+    this.tokenManager = new OAuth2TokenManager(config.oauth);
+  }
+
+  async performAction(data: RequestData): Promise<ResponseData> {
+    const authToken = await this.tokenManager.getAuthorizationTokenString();
+    // API call logic
+  }
+}
+
+export function createServiceName(): ServiceName {
+  const config = {
+    apiBaseUrl: process.env.API_BASE_URL!,
+    environment: process.env.API_ENVIRONMENT!,
+    oauth: {
+      tokenUrl: process.env.ACCESS_TOKEN_URL!,
+      clientId: process.env.OAUTH_CLIENT_ID!,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET!,
+      scope: process.env.OAUTH_SCOPE!,
+      tokenExpiryInSecs: parseInt(process.env.TOKEN_EXPIRY_IN_SECS!),
+      gracePeriodInSecs: parseInt(process.env.TOKEN_REFRESH_BEFORE_EXPIRY_IN_SECS!)
+    }
+  };
+  return new ServiceName(config);
+}
+```
+
+**Frontend API clients:**
+```typescript
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+export const apiFunction = async (params: ParamType): Promise<ResponseType> => {
+  try {
+    const response = await axios.post(`${BASE_URL}/api/endpoint`, params);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        error: error.response?.data?.error || error.message
+      };
+    }
+    throw error;
+  }
+};
+```
+
+### 4. Custom Hooks Pattern
+
+```typescript
+export const useCustomHook = () => {
+  const [state, setState] = useState<StateType>({
+    isProcessing: false,
+    error: null
+  });
+
+  const performAction = async (params: ParamType): Promise<ResultType> => {
+    console.log('[HOOK_NAME] Start:', { params });
+    setState({ isProcessing: true, error: null });
+
+    try {
+      // Step 1: First API call
+      console.log('[HOOK_NAME] Step 1: Action description...');
+      const step1Result = await apiCall1(params);
+      
+      // Step 2: Second API call
+      console.log('[HOOK_NAME] Step 2: Action description...');
+      const step2Result = await apiCall2(params);
+
+      console.log('[HOOK_NAME] Complete:', { success: step2Result.success });
+      setState({ isProcessing: false, error: null });
+
+      return {
+        success: step2Result.success,
+        message: 'Action completed',
+        details: step2Result.details
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('[HOOK_NAME] Error:', { params, error: errorMessage });
+      setState({ isProcessing: false, error: errorMessage });
+
+      return {
+        success: false,
+        message: 'Error during action',
+        details: errorMessage
+      };
+    }
+  };
+
+  const reset = () => {
+    setState({ isProcessing: false, error: null });
+  };
+
+  return { performAction, state, reset };
+};
+```
+
+### 5. OAuth2 Token Management
+
+- **Centralized token management** via `OAuth2TokenManager` class
+- **Automatic token refresh** with configurable grace period
+- **Token expiry tracking** to prevent expired token usage
+- **Shared across all external API services** (EW Maintenance, Asurion, WLS)
+
+### 6. Database Connection Patterns
+
+**PostgreSQL (EWS Database):**
+```typescript
+import pool from '../../config/ewsDatabase';
+
+export const queryDatabase = async (params: ParamType): Promise<ResultType> => {
+  const query = `SELECT * FROM table WHERE condition = $1`;
+  const values = [params.value];
+  
+  const result = await pool.query(query, values);
+  return result.rows;
+};
+```
+
+**Oracle (KB Database):**
+```typescript
+import { getOracleConnection } from '../../config/kbDatabase';
+
+export const queryOracle = async (params: ParamType): Promise<ResultType> => {
+  const connection = await getOracleConnection();
+  
+  try {
+    const result = await connection.execute(
+      `SELECT * FROM table WHERE condition = :value`,
+      { value: params.value }
+    );
+    return result.rows;
+  } finally {
+    await connection.close();
+  }
+};
+```
+
+---
+
+## Environment Variables
+
+```bash
+# Server Configuration
+BACKEND_PORT=3001        # Backend proxy server port
+FRONTEND_PORT=3000       # Frontend development server port
+
+# Frontend
+VITE_BACKEND_URL=http://localhost:3001
+
+# Backend - PostgreSQL (EWS Database)
+DB_HOST=
+DB_PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+
+# Backend - Oracle (KB Database)
+KB_ORACLE_USER=
+KB_ORACLE_PASSWORD=
+KB_ORACLE_CONNECT_STRING=
+
+# Backend - OAuth Configuration
+ACCESS_TOKEN_URL=
+TOKEN_EXPIRY_IN_SECS=300
+TOKEN_REFRESH_BEFORE_EXPIRY_IN_SECS=30
+
+# Backend - EW Maintenance API
+EW_MAINTENANCE_API_BASE_URL=
+EW_MAINTENANCE_API_ENVIRONMENT=
+EWSMA_OAUTH_CLIENT_ID=
+EWSMA_OAUTH_CLIENT_SECRET=
+EW_MAINTENANCE_OAUTH_SCOPE=
+
+# Backend - Asurion API
+ASURION_API_BASE_URL=
+ASURION_API_ENVIRONMENT=
+ASURION_OAUTH_CLIENT_ID=
+ASURION_OAUTH_CLIENT_SECRET=
+ASURION_OAUTH_SCOPE=
+
+# Backend - WLS API
+WLS_API_BASE_URL=
+WLS_API_ENVIRONMENT=
+WLS_OAUTH_CLIENT_ID=
+WLS_OAUTH_CLIENT_SECRET=
+WLS_OAUTH_SCOPE=
+```
+
+---
+
+## Coding Standards
+
+### 1. TypeScript
+- **Always use TypeScript** for type safety
+- Define **interfaces** for request/response types in `types/` directory
+- Use **strict type checking** - no `any` types unless absolutely necessary
+- Prefer **type inference** over explicit types where clear
+
+### 2. Error Handling
+- **Always use try-catch** blocks for async operations
+- **Log errors with context** using console.error with structured data
+- **Return error responses** instead of throwing (for API endpoints)
+- Use **axios.isAxiosError** for proper Axios error handling
+
+### 3. Logging
+- **Console log all requests** with timestamp and context
+- **Log request parameters** at the start of operations
+- **Log responses** with success/failure status
+- **Use structured logging** with objects, not string concatenation
+- Format: `[OPERATION_NAME] Message: { data }`
+
+Example:
+```typescript
+const timestamp = new Date().toISOString();
+console.log(`${timestamp} [RETRY_WARRANTY] Request:`, { contractId });
+console.log(`${timestamp} [RETRY_WARRANTY] Response:`, { status, httpStatus });
+```
+
+### 4. React Best Practices (React 19)
+- ✅ **React Compiler is enabled** - no manual optimization needed
+- ✅ **Use Actions** for forms and async operations
+- ✅ **Use use() hook** for data fetching when appropriate
+- ✅ **Keep it simple** - let React Compiler handle optimization
+- ❌ **No useCallback, useMemo, memo()** - compiler does it better
+- ✅ **Use custom hooks** for reusable logic
+- ✅ **Tailwind CSS** for all styling - no custom CSS files
+
+### 5. API Design
+- **RESTful routes** with clear naming
+- **Consistent response format:**
+  ```typescript
+  {
+    success: boolean;
+    message: string;
+    data?: any;
+    error?: string;
+    details?: string;
+  }
+  ```
+- **HTTP status codes:**
+  - 200: Success
+  - 400: Bad request (missing parameters)
+  - 500: Server error
+- **Request validation** before processing
+
+### 6. Security
+- **No sensitive data in logs** (tokens, passwords, etc.)
+- **Use HTTPS Agent** with proper certificate handling
+- **Environment variables** for all credentials
+- **Input validation** on all API endpoints
+
+---
+
+## Development Workflow
+
+### 1. Adding New API Endpoint
+1. Create service in `server/services/` with OAuth2TokenManager
+2. Create route in `server/routes/`
+3. Add route to `proxy-server.ts`
+4. Create frontend API client in `src/services/api/`
+5. Create custom hook in `src/hooks/` if needed
+6. Update component to use the new functionality
+7. Test end-to-end flow
+
+### 2. Adding Database Query
+1. Create service in `server/services/database/ews/` or `server/services/database/kb/`
+2. Use connection pool from config
+3. Add proper error handling and logging
+4. Create route handler
+5. Create frontend API client
+
+### 3. Adding New Retry Case
+1. Create custom hook in `src/hooks/retryContracts/`
+2. Follow existing case patterns (useCase1Retry.ts as template)
+3. Add proper logging and error handling
+4. Update RetryContracts component
+5. Add case definition to `src/constants/retryCases.ts`
+
+---
+
+## Key Takeaways
+
+1. ✅ **React 19 Compiler is enabled** - no manual optimization needed
+2. ✅ **Centralized OAuth2 management** - use OAuth2TokenManager for all external APIs
+3. ✅ **Factory pattern for services** - consistent service creation with config
+4.

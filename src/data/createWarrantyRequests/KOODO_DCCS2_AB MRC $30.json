@@ -1,0 +1,76 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "T00:00:00Z",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "402",
+					"description": "Device Care Complete Shared",
+					"vendorCd": "ASUR",
+					"warrantyProductCd": "KOODO_DCCS2_AB",
+					"brandId": "3",
+					"warrantySku": "KOODO_DCCS_AB2"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "3",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": "T19:00:35Z"
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "T00:00:00Z",
+				"sku": "",
+				"equipmentGroupCd": "PCS"
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "503",
+				"paymentMethodCd": "MRC",
+				"soc": "3SDCCSAB2",
+				"priceAmt": "30",
+				"sapMaterialNum": "000000000008012020"
+			}
+		},
+		"cancelContractList": []
+	}
+}

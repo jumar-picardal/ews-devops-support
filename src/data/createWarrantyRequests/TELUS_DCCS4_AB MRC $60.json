@@ -1,0 +1,76 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "T00:00:00Z",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "400",
+					"description": "Device Care Complete Shared",
+					"vendorCd": "ASUR",
+					"warrantyProductCd": "TELUS_DCCS4_AB",
+					"brandId": "1",
+					"warrantySku": "TELUS_DCCS_AB"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "1",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": "T19:00:35Z"
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "T00:00:00Z",
+				"sku": "",
+				"equipmentGroupCd": "PCS"
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "501",
+				"paymentMethodCd": "MRC",
+				"soc": "SDCCSAB4",
+				"priceAmt": "60",
+				"sapMaterialNum": "000000000008011991"
+			}
+		},
+		"cancelContractList": []
+	}
+}

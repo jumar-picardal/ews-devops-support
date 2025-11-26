@@ -1,0 +1,77 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "325",
+					"description": "Device Care BYOD",
+					"vendorCd": "ASUR",
+					"warrantyProductCd": "TELUS_DCBYOD_QC",
+					"brandId": "1",
+					"warrantySku": "TELUS_DCB_QC"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "1",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": ""
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "",
+				"sku": "",
+				"equipmentGroupCd": "PCS",
+				"deviceCondition": "byod"
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "385",
+				"paymentMethodCd": "MRC",
+				"soc": "SDCBOYDPQ",
+				"priceAmt": "9",
+				"sapMaterialNum": "000000000008011944"
+			}
+		},
+		"cancelContractList": []
+	}
+}

@@ -1,0 +1,76 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "333",
+					"description": "Device Care Connected",
+					"vendorCd": "ASUR",
+					"warrantyProductCd": "TELUS_DCCN_QC",
+					"brandId": "1",
+					"warrantySku": "TELUS_DCCON_QC"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "1",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": ""
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "",
+				"sku": "",
+				"equipmentGroupCd": "PCS"
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "393",
+				"paymentMethodCd": "MRC",
+				"soc": "SDCCONPQ",
+				"priceAmt": "9",
+				"sapMaterialNum": "000000000008011952"
+			}
+		},
+		"cancelContractList": []
+	}
+}

@@ -1,0 +1,16 @@
+1	familyName
+2	givenName
+3	phoneNumber
+4	emailAddress
+5	startDate
+6	imei
+7	startDate
+8	ban
+9	accountType
+10	accountSubtype
+11	street1
+12	stateOrProvince
+13	city
+14	postCode
+15	sku
+16	deviceDescription

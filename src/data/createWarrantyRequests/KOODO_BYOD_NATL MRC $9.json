@@ -1,0 +1,77 @@
+{
+	"action": "REGISTER",
+	"warranty": {
+		"integrationContext": {
+			"orderTypeCd": "ACTIVATION",
+			"shipFromWarehouseInd": "false"
+		},
+		"extendedWarranty": {
+			"startDate": "",
+			"billingAccount": {
+				"id": "",
+				"accountType": "",
+				"accountSubtype": ""
+			},
+			"product": [
+				{
+					"id": "326",
+					"description": "Device Care BYOD",
+					"vendorCd": "ASUR",
+					"warrantyProductCd": "KOODO_BYOD_NATL",
+					"brandId": "3",
+					"warrantySku": "KOODO_DCB"
+				}
+			],
+			"customer": {
+				"description": "",
+				"billingAccount": {
+					"id": "",
+					"accountType": "",
+					"accountSubtype": ""
+				},
+				"subscriptionId": "",
+				"phoneNumber": "",
+				"brandId": "1",
+				"relatedParty": {
+					"familyName": "",
+					"givenName": "",
+					"languageCd": "EN",
+					"contactMedium": {
+						"emailAddress": "",
+						"city": "",
+						"country": "CAN",
+						"postCode": "",
+						"stateOrProvince": "",
+						"street1": ""
+					}
+				}
+			},
+			"validFor": {
+				"startDateTime": ""
+			},
+			"deviceInfo": {
+				"serialNum": "",
+				"purchaseDate": "",
+				"sku": "",
+				"equipmentGroupCd": "PCS",
+				"deviceCondition": ""
+			},
+			"channel": {
+				"channelTypeCode": "IOTA",
+				"channelOutletId": "11538020",
+				"salesRepInfo": {
+					"id": "12011741",
+					"pin": "H9Q3"
+				}
+			},
+			"payment": {
+				"id": "422",
+				"paymentMethodCd": "MRC",
+				"soc": "3SDCBOYD",
+				"priceAmt": "9",
+				"sapMaterialNum": "000000000008011945"
+			}
+		},
+		"cancelContractList": []
+	}
+}
